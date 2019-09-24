@@ -52,3 +52,7 @@ def send_message(msg):
          }
   request = Request(url, urlencode(data).encode())
   json = urlopen(request).read().decode()
+
+def log(msg):
+    print(str(msg))
+    sys.stdout.flush()
