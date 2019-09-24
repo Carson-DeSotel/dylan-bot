@@ -1,11 +1,13 @@
 import os
 import sys
 import json
-import requests 
+
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 from flask import Flask, request
+
+from random import choice
 
 app = Flask(__name__)
 
@@ -20,7 +22,25 @@ def webhook():
         send_message("nice")
 
     if('--beerme' in data['text']):
-        reply_with_image("yeah bro, here, have a brewski", "https://www.faustbrewing.com/images/beers/types/beerglasstwo.png")
+        responses = [
+        "yeah bro, have a beer on me",
+        "I'll get you a 'rona my dude",
+        "Hope a busch latte sounds good my guy",
+        "We're all out. Here's a Mike's Hard",
+        "It just hasn't been the same since Michelle left man. Coors? Her favorite brew was Coors. Oh God oh fuck me. WHYYYYYYYYYYYYYYYYYYYYYY! MICHELLE I STILL LOVE YOU"
+        ]
+        send_message(choice(responses))
+
+    if('--mebeer' in data['text']):
+        responses = [
+            'Bro, could you beer me? My \'rona\'s gettin low!',
+            'A coors sounds pretty cash right now, not gonna lie',
+            'broski, I\'d kill for a miller right now, I\'ll Venmo you',
+            'Spot me for a cerveza mi amigo?',
+            'brrrroooooooooo neeed another beeeerr mannnn',
+            'fuck dude of fuck I\'m so juiced rn bro'
+        ]
+        send_message(choice(responses))
   return "ok", 200
 
 def send_message(msg):
@@ -32,37 +52,3 @@ def send_message(msg):
          }
   request = Request(url, urlencode(data).encode())
   json = urlopen(request).read().decode()
-
-def reply_with_image(msg, imgURL):
-	url = 'https://api.groupme.com/v3/bots/post'
-	urlOnGroupMeService = upload_image_to_groupme(imgURL)
-	data = {
-		'bot_id'		: bot_id,
-		'text'			: msg,
-		'picture_url'		: urlOnGroupMeService
-	}
-	request = Request(url, urlencode(data).encode())
-	json = urlopen(request).read().decode()
-
-def upload_image_to_groupme(imgURL):
-	imgRequest = requests.get(imgURL, stream=True)
-	filename = 'temp.png'
-	postImage = None
-	if imgRequest.status_code == 200:
-		# Save Image
-		with open(filename, 'wb') as image:
-			for chunk in imgRequest:
-				image.write(chunk)
-		# Send Image
-		headers = {'content-type': 'application/json'}
-		url = 'https://image.groupme.com/pictures'
-		files = {'file': open(filename, 'rb')}
-		payload = {'access_token': 'eo7JS8SGD49rKodcvUHPyFRnSWH1IVeZyOqUMrxU'}
-		r = requests.post(url, files=files, params=payload)
-		imageurl = r.json()['payload']['url']
-		os.remove(filename)
-		return imageurl
-
-def log(msg):
-  print(str(msg))
-  sys.stdout.flush()
