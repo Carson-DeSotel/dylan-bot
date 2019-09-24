@@ -5,7 +5,7 @@ from urllib.request import Request, urlopen
 from flask import Flask, request
 
 app = Flask(__name__)
-bot_id = "REPLACE THIS WITH YOUR BOT ID ONCE BOT IS ADDED TO THE CHAT"
+bot_id = "7cbe8b69b82032691c31e43dea"
 
 
 @app.route('/', methods=['POST'])
