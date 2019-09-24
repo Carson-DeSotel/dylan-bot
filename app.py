@@ -74,7 +74,7 @@ def webhook():
 
         send_message(responses[choice(odds)])
 
-    if('bro' in data['text'].lower() and data['name'] != 'Dylan':):
+    if('bro' in data['text'].lower() and data['name'] != 'Dylan'):
         send_message("Yup, just chillin with the bros. ")
   return "ok", 200
 
