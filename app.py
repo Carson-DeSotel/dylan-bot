@@ -17,7 +17,7 @@ def webhook():
   # We don't want to reply to ourselves!
   if data['name'] != 'nice-groupme':
     if('69' in data['text']):
-    send_message("nice")
+        send_message("nice")
 
   return "ok", 200
 
