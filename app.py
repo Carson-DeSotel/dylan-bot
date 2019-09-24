@@ -18,10 +18,10 @@ def webhook():
 
   # We don't want to reply to ourselves!
   if data['name'] != 'nice-groupme':
-    if('69' in data['text'] or "sixty-nine" in data['text'].lower()):
+    if('69' in data['text'] or "sixty-nine" in data['text'].lower() and data['name'] != 'Dylan'):
         send_message("nice")
 
-    if('--beerme' in data['text'].lower()):
+    if('--beerme' in data['text'].lower() and data['name'] != 'Dylan'):
         responses = [
         "yeah bro, have a beer on me",
         "I'll get you a 'rona my dude",
@@ -31,7 +31,7 @@ def webhook():
         ]
         send_message(choice(responses))
 
-    if('--mebeer' in data['text'].lower()):
+    if('--mebeer' in data['text'].lower() and data['name'] != 'Dylan'):
         responses = [
             'Bro, could you beer me? My \'rona\'s gettin low!',
             'A coors sounds pretty cash right now, not gonna lie',
@@ -42,7 +42,7 @@ def webhook():
         ]
         send_message(choice(responses))
 
-    if('major' in data['text'].lower()):
+    if('major' in data['text'].lower() and data['name'] != 'Dylan'):
         responses = [
         "Yeah man, for sure. I'm studying finance with a minor in blastin babes.",
         "Major? Yeah, my dad said that if I got a business administration degree, I could work for his company",
@@ -53,7 +53,7 @@ def webhook():
 
         send_message(choice(responses))
 
-    if('pong' in data['text'].lower()):
+    if('pong' in data['text'].lower() and data['name'] != 'Dylan'):
         responses = {
         0:  [
                 "Wow man, you're pretty good at pong!",
@@ -74,7 +74,7 @@ def webhook():
 
         send_message(responses[choice(odds)])
 
-    if('bro' in data['text'].lower()):
+    if('bro' in data['text'].lower() and data['name'] != 'Dylan':):
         send_message("Yup, just chillin with the bros. ")
   return "ok", 200
 
