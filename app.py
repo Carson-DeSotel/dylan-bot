@@ -20,8 +20,7 @@ def webhook():
         send_message("nice")
 
     if('--beerme' in data['text']):
-        send_message("yeah bro, here, have a brewski")
-        upload_image_to_groupme("https://www.faustbrewing.com/images/beers/types/beerglassthree.png")
+        reply_with_image("yeah bro, here, have a brewski", "https://www.faustbrewing.com/images/beers/types/beerglasstwo.png")
   return "ok", 200
 
 def send_message(msg):
@@ -33,6 +32,17 @@ def send_message(msg):
          }
   request = Request(url, urlencode(data).encode())
   json = urlopen(request).read().decode()
+
+def reply_with_image(msg, imgURL):
+	url = 'https://api.groupme.com/v3/bots/post'
+	urlOnGroupMeService = upload_image_to_groupme(imgURL)
+	data = {
+		'bot_id'		: bot_id,
+		'text'			: msg,
+		'picture_url'		: urlOnGroupMeService
+	}
+	request = Request(url, urlencode(data).encode())
+	json = urlopen(request).read().decode()
 
 def upload_image_to_groupme(imgURL):
 	imgRequest = requests.get(imgURL, stream=True)
