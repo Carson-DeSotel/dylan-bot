@@ -1,33 +1,36 @@
 import os
+import sys
 import json
+
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
+
 from flask import Flask, request
 
 app = Flask(__name__)
-bot_id = os.getenv('GROUPME_BOT_ID')
-
 
 @app.route('/', methods=['POST'])
 def webhook():
-	# 'message' is an object that represents a single GroupMe message.
-	message = request.get_json()
+  data = request.get_json()
+  log('Recieved {}'.format(data))
 
-	if '69' in message['text'] and not sender_is_bot(message):
-		reply('nice')
+  # We don't want to reply to ourselves!
+  if data['name'] != 'apnorton-test-bot':
+    msg = '{}, you sent "{}".'.format(data['name'], data['text'])
+    send_message(msg)
 
-	return "ok", 200
+  return "ok", 200
 
+def send_message(msg):
+  url  = 'https://api.groupme.com/v3/bots/post'
 
-def reply(msg):
-    url = 'https://api.groupme.com/v3/bots/post'
-    data = {
-        'bot_id'		: bot_id,
-        'text'			: msg
-    }
-    request = Request(url, urlencode(data).encode())
-    json = urlopen(request).read().decode()
+  data = {
+          'bot_id' : os.getenv('GROUPME_BOT_ID'),
+          'text'   : msg,
+         }
+  request = Request(url, urlencode(data).encode())
+  json = urlopen(request).read().decode()
 
-
-def sender_is_bot(message):
-	return message['sender_type'] == "bot"
+def log(msg):
+  print(str(msg))
+  sys.stdout.flush()
