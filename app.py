@@ -18,10 +18,10 @@ def webhook():
 
   # We don't want to reply to ourselves!
   if data['name'] != 'nice-groupme':
-    if('69' in data['text']):
+    if('69' in data['text'] or "sixty-nine" in data['text'].tolower()):
         send_message("nice")
 
-    if('--beerme' in data['text']):
+    if('--beerme' in data['text'].tolower()):
         responses = [
         "yeah bro, have a beer on me",
         "I'll get you a 'rona my dude",
@@ -31,7 +31,7 @@ def webhook():
         ]
         send_message(choice(responses))
 
-    if('--mebeer' in data['text']):
+    if('--mebeer' in data['text'].tolower()):
         responses = [
             'Bro, could you beer me? My \'rona\'s gettin low!',
             'A coors sounds pretty cash right now, not gonna lie',
@@ -41,6 +41,41 @@ def webhook():
             'fuck dude of fuck I\'m so juiced rn bro'
         ]
         send_message(choice(responses))
+
+    if('major' in data['text'].tolower()):
+        responses = [
+        "Yeah man, for sure. I'm studying finance with a minor in blastin babes.",
+        "Major? Yeah, my dad said that if I got a business administration degree, I could work for his company",
+        "My major? Not really sure right now, just as long as I don't have to take many classes or math",
+        "I'm planning on a  major in getting lit with a minor in selling drugs.",
+        "I used to be a finance major, but I got kicked out of my school for all the drug things"
+        ]
+
+        send_message(choice(responses))
+
+    if('pong' in data['text'].tolower()):
+        responses = {
+        0:  [
+                "Wow man, you're pretty good at pong!",
+                "Guess that drinks on me!",
+                "Flick, swish!",
+                "BRO SICK"
+            ],
+        1:  [
+                "GOTTA GET BETTER LITTLE MAN",
+                "The name's Dylan and I'm the alpha of this pong table",
+                "get skunk'd"
+            ]
+        }
+
+        odds = [
+        0, 0, 0, 0, 1, 1,
+        ]
+
+        send_message(responses[choice(odds)])
+
+    if('bro' in data['text'].tolower()):
+        send_message("Yup, just chillin with the bros. ")
   return "ok", 200
 
 def send_message(msg):
