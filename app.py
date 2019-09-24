@@ -10,7 +10,7 @@ from flask import Flask, request
 from random import choice
 
 app = Flask(__name__)
-
+bot_id = os.getenv('GROUPME_BOT_ID')
 @app.route('/', methods=['POST'])
 def webhook():
   data = request.get_json()
@@ -47,7 +47,7 @@ def send_message(msg):
   url  = 'https://api.groupme.com/v3/bots/post'
 
   data = {
-          'bot_id' : os.getenv('GROUPME_BOT_ID'),
+          'bot_id' : bot_id,
           'text'   : msg,
          }
   request = Request(url, urlencode(data).encode())
